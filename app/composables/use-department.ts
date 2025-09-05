@@ -19,6 +19,19 @@ export function useDepartment() {
       departments.value = []
     }
   }
+  const getDepartment = async (id: string): Promise<DepartmentResponse | null> => {
+    try {
+      const response = await $fetch(`${api}/departments/${id}`, 'get');
+
+      if (response.status !== 200) throw new Error("");
+
+      const result = await response.json();
+
+      return result;
+    } catch {
+      return null
+    }
+  }
   const getDepartmentSummary = async (id: string): Promise<DepartmentSummary | null> => {
     try {
       const response = await $fetch(`${api}/departments/${id}/summary`, 'get');
@@ -85,5 +98,5 @@ export function useDepartment() {
     }
   }
 
-  return { departments, getDepartments, getDepartmentSummary, createDepartment, updateDepartment, deleteDepartment };
+  return { departments, getDepartments, getDepartment, getDepartmentSummary, createDepartment, updateDepartment, deleteDepartment };
 }

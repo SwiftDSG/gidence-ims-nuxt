@@ -2,6 +2,7 @@ import type { UserResponse, UserRequest } from "~/types/user";
 
 export default () => {
   const { $setDefaults, $fetch } = useNuxtApp();
+  const { setError } = useAlert()
   const { public: { api } } = useRuntimeConfig();
   const atkCookie = useCookie<string>("atk", {
     maxAge: 1800,
@@ -10,6 +11,7 @@ export default () => {
     maxAge: 86400,
   });
 
+  const users = useState<UserResponse[]>("users", () => []);
   const user = useState<UserResponse | null>("user", () => null);
 
   const getUsers = async (): Promise<UserResponse[]> => {
@@ -21,6 +23,8 @@ export default () => {
       if (response.status !== 200) throw new Error("");
 
       const result = await response.json();
+
+      users.value = result;
 
       return result;
     } catch (e) {
@@ -86,17 +90,12 @@ export default () => {
       } =
         await response.json();
       if (!a || !r) throw new Error("");
-      atkCookie.value = a;
-      rtkCookie.value = r;
-      $setDefaults({
-        headers: {
-          Authorization: `Bearer ${a}`,
-        },
-      });
+
       user.value = u;
 
       return u;
     } catch (e) {
+      setError(e);
       return null;
     }
   };
@@ -171,5 +170,5 @@ export default () => {
     });
   };
 
-  return { user, getUser, getUsers, createUser, deleteUser, updateUser, login, logout, refresh };
+  return { user, users, getUser, getUsers, createUser, deleteUser, updateUser, login, logout, refresh };
 };

@@ -15,18 +15,13 @@
         </div>
         <div class="gd-panel-form-body">
           <div class="gd-panel-form-body-input">
-            <gd-input-text
-              :value="username"
-              placeholder="Username"
-              @change="(val) => (username = val)"
-            />
+            <gd-input-text v-model="username" placeholder="Username" />
           </div>
           <div class="gd-panel-form-body-input">
             <gd-input-text
-              :value="password"
+              v-model="password"
               type="password"
               placeholder="Password"
-              @change="(val) => (password = val)"
             />
           </div>
           <div class="gd-panel-form-body-button">

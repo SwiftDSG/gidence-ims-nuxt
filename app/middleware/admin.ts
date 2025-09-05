@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return "/auth"
   }
   if (user.value.role !== 'admin') {
-    return "/unauthorized"
+    return `/${user.value.role.user}`
   }
 
   return true

@@ -16,9 +16,9 @@
         <div class="gd-panel-form-body">
           <div class="gd-panel-form-body-input">
             <gd-input-text
-              :value="route.params.intake_id as string || 'ABC'"
-              :disabled="true"
+              v-model="intakeId"
               placeholder="ID Pengajuan"
+              :disabled="true"
             />
             <gd-button-icon
               icon="copy"
@@ -27,7 +27,7 @@
                 text: 'Salin ID Pengajuan',
                 position: 'left',
               }"
-              @click="() => copyToClipboard(route.params.intake_id as string)"
+              @click="() => copyToClipboard(intakeId)"
             />
           </div>
         </div>
@@ -80,6 +80,8 @@
         });
       });
   }
+
+  const intakeId = computed(() => route.params.intake_id as string);
 
   onMounted(async () => {
     if (!gdPanel.value) return;

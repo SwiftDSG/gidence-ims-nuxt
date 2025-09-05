@@ -36,8 +36,8 @@
 
   // Types
   interface InputProps {
-    modelValue: string;
     label?: string;
+    modelValue?: string;
     placeholder?: string;
     name?: string;
     type?: "text" | "password" | "email" | "tel" | "url" | "number";
@@ -57,6 +57,7 @@
 
   // Props with defaults
   const props = withDefaults(defineProps<InputProps>(), {
+    modelValue: "",
     type: "text",
     autocomplete: "off",
     disabled: false,

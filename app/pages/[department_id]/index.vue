@@ -121,9 +121,8 @@
       <div class="gd-item-search-modal">
         <div class="gd-item-search-modal-input">
           <gd-input-text
-            :value="itemSearch"
+            v-model="itemSearch"
             placeholder="Masukkan kode barang"
-            @change="(val) => (itemSearch = val)"
             type="text"
           />
           <gd-button-icon icon="search" type="primary" @click="itemGetByCode" />

@@ -168,8 +168,7 @@
           class="gd-row-form-input"
         >
           <gd-input-text
-            :value="formDecisionExpiration"
-            @change="(val) => (formDecisionExpiration = val)"
+            v-model="formDecisionExpiration"
             type="text"
             label="Masa berlaku (hari)"
             placeholder="90"
@@ -177,8 +176,7 @@
         </div>
         <div class="gd-row-form-input">
           <gd-input-text
-            :value="formNote"
-            @change="(val) => (formNote = val)"
+            v-model="formNote"
             label="Catatan"
             placeholder="Catatan"
           />

@@ -20,34 +20,30 @@
             </div>
             <div class="gd-panel-form-body-group-input">
               <gd-input-text
-                :value="vendorName"
+                v-model="vendorName"
                 label="Nama Vendor"
                 placeholder="Contoh: PT. Mari Sukses Bersama"
-                @change="(val) => (vendorName = val)"
               />
             </div>
             <div class="gd-panel-form-body-group-input">
               <gd-input-text
-                :value="vendorEmail"
+                v-model="vendorEmail"
                 label="Email Vendor"
                 placeholder="Contoh: email@vendor.com"
-                @change="(val) => (vendorEmail = val)"
               />
             </div>
             <div class="gd-panel-form-body-group-input">
               <gd-input-text
-                :value="vendorPhone"
+                v-model="vendorPhone"
                 label="Telepon Vendor"
                 placeholder="Contoh: +62 812 3456 7890"
-                @change="(val) => (vendorPhone = val)"
               />
             </div>
             <div class="gd-panel-form-body-group-input">
               <gd-input-text
-                :value="vendorAddress"
+                v-model="vendorAddress"
                 label="Alamat Vendor"
                 placeholder="Contoh: Jl. Raya No. 123"
-                @change="(val) => (vendorAddress = val)"
               />
             </div>
             <p class="gd-panel-form-body-group-message gd-body-5">
@@ -89,10 +85,9 @@
             </div>
             <div class="gd-panel-form-body-group-input">
               <gd-input-text
-                :value="commodityName"
+                v-model="commodityName"
                 label="Nama Barang"
                 placeholder="Contoh: Fluke 15B Digital Multimeter"
-                @change="(val) => (commodityName = val)"
               />
             </div>
             <div class="gd-panel-form-body-group-input">
@@ -109,15 +104,13 @@
               class="gd-panel-form-body-group-input"
             >
               <gd-input-text
-                :value="specification[0]"
+                v-model="specification[0]"
                 label="Label Spesifikasi"
-                @change="(value) => commoditySpecification[index]![0] = value"
                 placeholder="Contoh: Merk"
               />
               <gd-input-text
-                :value="specification[1]"
+                v-model="specification[1]"
                 label="Nilai Spesifikasi"
-                @change="(value) => commoditySpecification[index]![1] = value"
                 placeholder="Contoh: Fluke"
               />
               <gd-button-icon

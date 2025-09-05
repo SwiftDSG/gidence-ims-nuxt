@@ -171,10 +171,7 @@
           >Apakah Anda yakin ingin menolak permintaan ini? Sertakan alasan
           penolakan.</span
         >
-        <gd-input-text
-          :value="modalReason"
-          @change="(val) => (modalReason = val)"
-        />
+        <gd-input-text v-model="modalReason" />
         <gd-button
           text="Tolak pengajuan"
           type="error"
