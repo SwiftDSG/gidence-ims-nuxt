@@ -105,6 +105,18 @@
           '',
         ]"
       >
+        <tr v-if="items.length === 0" class="gd-page-items-empty">
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <td class="gd-page-items-empty-column"></td>
+          <div class="gd-page-items-empty-message gd-body-5">
+            Tidak ada alat yang membutuhkan verifikasi
+          </div>
+        </tr>
         <gd-item
           v-for="item in items"
           :key="item.id"
@@ -285,11 +297,34 @@
     &-items {
       position: relative;
       width: 100%;
+      &-empty {
+        position: relative;
+        width: 100%;
+
+        &-column {
+          position: relative;
+          height: 2rem;
+        }
+
+        &-message {
+          z-index: 2;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          color: var(--font-secondary-color);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
     }
   }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .gd-item-search-modal {
     position: relative;
     width: 40vw;

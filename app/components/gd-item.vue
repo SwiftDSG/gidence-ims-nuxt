@@ -155,7 +155,7 @@
       <form class="gd-row-form">
         <div class="gd-row-form-input">
           <gd-input-text-select
-            :model="formDecisionModel"
+            v-model="formDecisionModel"
             :options="formDecisionOptions"
             :strict="true"
             type="secondary"
