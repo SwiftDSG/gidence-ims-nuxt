@@ -5,11 +5,11 @@
       :style="view === 'small' ? `${intakeSelected ? 'z-index: 1' : ''}` : ''"
     >
       <div class="gd-page-intakes-header">
-        <span class="gd-page-intakes-header-title gd-headline-2">
+        <span class="gd-page-intakes-header-title gd-headline-3">
           Pengajuan Masuk
         </span>
         <div class="gd-page-intakes-header-action">
-          <gd-button
+          <gd-button-icon
             text="Link"
             icon="copy"
             type="secondary"
@@ -99,6 +99,7 @@
         width: 100%;
         height: 3rem;
         padding: 0.5rem;
+        border-bottom: var(--border);
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;

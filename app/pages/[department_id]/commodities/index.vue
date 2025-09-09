@@ -7,7 +7,7 @@
       "
     >
       <div class="gd-page-commodities-header">
-        <span class="gd-page-commodities-header-title gd-headline-2">
+        <span class="gd-page-commodities-header-title gd-headline-3">
           Komoditas
         </span>
       </div>
@@ -74,6 +74,7 @@
         width: 100%;
         height: 3rem;
         padding: 0.5rem;
+        border-bottom: var(--border);
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
