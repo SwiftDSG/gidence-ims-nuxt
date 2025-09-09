@@ -53,11 +53,7 @@
           </a>
         </div>
         <div class="gd-navigation-footer">
-          <gd-button-icon
-            :icon="theme === 'dark' ? 'moon' : 'sun'"
-            type="secondary"
-            @click="theme = theme === 'dark' ? 'light' : 'dark'"
-          />
+          <gd-button-icon icon="exit" type="secondary" @click="exit" />
           <gd-button-icon
             :icon="navigation === 'collapsed' ? 'panel-open' : 'panel-close'"
             type="secondary"
@@ -90,6 +86,7 @@
 
   const { view, rem, theme, navigation } = useMain();
   const { loadPrinterConfig } = usePrinter();
+  const { logout } = useUser();
 
   const links = ref<Link[]>([
     {
@@ -132,6 +129,10 @@
       "--vh",
       `${window.innerHeight * 0.01}px`
     );
+  };
+  const exit = () => {
+    logout();
+    router.push("/auth");
   };
 
   watch(

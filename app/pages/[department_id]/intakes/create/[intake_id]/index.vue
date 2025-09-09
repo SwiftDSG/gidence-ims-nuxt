@@ -30,6 +30,15 @@
               @click="() => copyToClipboard(intakeId)"
             />
           </div>
+          <div class="gd-panel-form-body-button">
+            <gd-button
+              text="Buat pengajuan lagi"
+              type="secondary"
+              style="width: 100%"
+              :disabled="loading"
+              @click="exit"
+            />
+          </div>
         </div>
       </form>
     </div>
@@ -80,6 +89,16 @@
         });
       });
   }
+  const exit = () => {
+    // Remove the current intake_id from the route and navigate to the create intake page
+    const paths = route.path.split("/");
+    paths.pop();
+    const path = paths.join("/");
+    timeline.value.vars.onReverseComplete = () => {
+      router.push(path);
+    };
+    timeline.value.reverse();
+  };
 
   const intakeId = computed(() => route.params.intake_id as string);
 
