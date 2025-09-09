@@ -4,6 +4,19 @@
       class="gd-page-intakes"
       :style="view === 'small' ? `${intakeSelected ? 'z-index: 1' : ''}` : ''"
     >
+      <div class="gd-page-intakes-header">
+        <span class="gd-page-intakes-header-title gd-headline-2">
+          Pengajuan Masuk
+        </span>
+        <div class="gd-page-intakes-header-action">
+          <gd-button
+            text="Link"
+            icon="copy"
+            type="secondary"
+            @click="copyToClipboard"
+          />
+        </div>
+      </div>
       <gd-intake
         v-for="intake in intakes"
         :key="intake.id"
@@ -33,8 +46,31 @@
 
   const { view } = useMain();
   const { intakes, getIntakes } = useIntake();
+  const { setAlert } = useAlert();
+  const route = useRoute();
 
   const intakeSelected = ref<IntakeResponse | null>(null);
+
+  function copyToClipboard() {
+    const text = `${window.location.origin}/${route.params.department_id}/intakes/create`;
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setAlert({
+          type: "success",
+          title: "ID Pengajuan Disalin",
+          message: "Berhasil menyalin ID ke clipboard.",
+        });
+      })
+      .catch(() => {
+        setAlert({
+          type: "error",
+          title: "Gagal Menyalin",
+          message: "Terjadi kesalahan saat menyalin ID pengajuan.",
+        });
+      });
+  }
 
   onMounted(async () => {
     await getIntakes();
@@ -58,6 +94,16 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      &-header {
+        position: relative;
+        width: 100%;
+        height: 3rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
     &-intake {
       position: relative;

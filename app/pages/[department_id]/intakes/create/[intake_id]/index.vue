@@ -51,10 +51,6 @@
 
   const { view } = useMain();
   const { setAlert } = useAlert();
-  const { categories, getCategories, createCategory } = useCategory();
-  const { vendors, getVendors } = useVendor();
-  const { commodities, getCommodities } = useCommodity();
-  const { createIntake } = useIntake();
   const router = useRouter();
   const route = useRoute();
 

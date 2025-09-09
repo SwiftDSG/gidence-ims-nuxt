@@ -6,6 +6,11 @@
         view === 'small' ? `${commoditySelected ? 'z-index: 1' : ''}` : ''
       "
     >
+      <div class="gd-page-commodities-header">
+        <span class="gd-page-commodities-header-title gd-headline-2">
+          Komoditas
+        </span>
+      </div>
       <gd-commodity
         v-for="commodity in commodities"
         :key="commodity.id"
@@ -64,6 +69,16 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      &-header {
+        position: relative;
+        width: 100%;
+        height: 3rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
     &-commodity {
       position: relative;

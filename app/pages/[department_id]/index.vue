@@ -203,14 +203,14 @@
   .gd-page {
     width: 100%;
     overflow: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     align-self: flex-start;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
 
     &-header {
       position: relative;
@@ -226,9 +226,9 @@
     }
     &-insight {
       position: relative;
-      width: calc((100% - 3rem) / 4);
-      padding: 0.75rem 0.75rem 0.625rem 0.75rem;
-      border-radius: 1rem;
+      width: calc((100% - 1.5rem) / 4);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
       border: var(--border);
       background-color: var(--background-depth-one-color);
       box-sizing: border-box;
