@@ -72,7 +72,6 @@
     small?: boolean;
     strict?: boolean;
     disabled?: boolean;
-    allowCustom?: boolean; // New prop to replace inverse strict logic
   }
 
   interface SelectEmits {
@@ -89,7 +88,6 @@
     placeholder: "",
     disabled: false,
     strict: false,
-    allowCustom: false,
     small: false,
   });
 
@@ -215,8 +213,8 @@
         emit("update:modelValue", matchingOption);
         emit("change", matchingOption);
       }
-    } else if (props.allowCustom && inputValue.value) {
-      // Allow custom value if not strict and allowCustom is true
+    } else if (inputValue.value) {
+      // Allow custom value if not strict
       const matchingOption = props.options.find(
         (option) =>
           option.label.toLowerCase() === inputValue.value.toLowerCase()

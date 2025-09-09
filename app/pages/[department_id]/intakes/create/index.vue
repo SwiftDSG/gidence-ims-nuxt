@@ -291,8 +291,6 @@
         }))
         .filter((a) => a.label && a.value);
 
-      console.log(name, specification);
-
       if (!name || specification.length === 0) {
         setAlert({
           type: "error",
