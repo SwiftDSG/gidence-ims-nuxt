@@ -25,4 +25,8 @@
   const inputOpus = ref("");
   const inputGpt = ref("");
   const inputZ = ref("");
+
+  onMounted(() => {
+    console.log("Component mounted");
+  })
 </script>

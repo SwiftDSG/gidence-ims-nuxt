@@ -12,6 +12,9 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :maxlength="limit"
+      :min="min"
+      :max="max"
+      :step="step"
       :autocomplete="autocomplete"
       :value="modelValue"
       @input="handleInput"
@@ -41,6 +44,9 @@
     placeholder?: string;
     name?: string;
     type?: "text" | "password" | "email" | "tel" | "url" | "number";
+    min?: number;
+    max?: number;
+    step?: number;
     limit?: number;
     error?: string;
     disabled?: boolean;

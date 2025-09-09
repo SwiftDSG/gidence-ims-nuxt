@@ -1,10 +1,11 @@
+export type VerificationDecision = {
+  operational: number; // Duration in days
+} | "decommissioned";
 export type Verification = {
   _id: string;
   item_id: string; // ID of the item being verified
   user_id: string; // ID of the user performing the verification
-  decision: {
-    operational: number; // Duration in days
-  } | "decommissioned"; // Decision made by the user
+  decision: VerificationDecision;
   note?: string;
   create_date: number;
 };
@@ -14,12 +15,12 @@ export type VerificationResponse = {
   item_name: string;
   user_id: string; // ID of the user performing the verification
   user_name: string;
-  decision: Verification["decision"];
+  decision: VerificationDecision;
   note?: string;
   create_date: number;
 };
 export type VerificationRequest = {
   item_id: string; // ID of the item being verified
-  decision: Verification["decision"];
+  decision: VerificationDecision;
   note?: string;
 };

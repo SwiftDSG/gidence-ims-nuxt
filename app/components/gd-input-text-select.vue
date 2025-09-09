@@ -1,5 +1,5 @@
 <template>
-  <gd-popover v-model:visible="isOpen" @close="handleClose">
+  <gd-popover :visible="isOpen" @close="handleClose">
     <template #trigger>
       <div
         class="gd-input"

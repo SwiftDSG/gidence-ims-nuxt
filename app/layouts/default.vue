@@ -89,6 +89,7 @@
   const route = useRoute();
 
   const { view, rem, theme, navigation } = useMain();
+  const { loadPrinterConfig } = usePrinter();
 
   const links = ref<Link[]>([
     {
@@ -144,6 +145,7 @@
     localStorage.setItem("theme", theme.value);
   });
   onMounted(() => {
+    loadPrinterConfig();
     resizeHandler();
 
     window.addEventListener("resize", resizeHandler);

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="departmentSummary" class="gd-page">
+  <div v-if="departmentSummary" class="gd-page" :data-view="view">
     <div class="gd-page-header">
       <span class="gd-page-header-title gd-headline-2">
         {{ departmentSummary.name }}
@@ -105,7 +105,11 @@
           '',
         ]"
       >
-        <tr v-if="items.length === 0" class="gd-page-items-empty">
+        <tr
+          v-if="items.length === 0"
+          class="gd-page-items-empty gd-body-5"
+          data-message="Tidak ada alat yang membutuhkan verifikasi"
+        >
           <td class="gd-page-items-empty-column"></td>
           <td class="gd-page-items-empty-column"></td>
           <td class="gd-page-items-empty-column"></td>
@@ -113,9 +117,6 @@
           <td class="gd-page-items-empty-column"></td>
           <td class="gd-page-items-empty-column"></td>
           <td class="gd-page-items-empty-column"></td>
-          <div class="gd-page-items-empty-message gd-body-5">
-            Tidak ada alat yang membutuhkan verifikasi
-          </div>
         </tr>
         <gd-item
           v-for="item in items"
@@ -162,6 +163,10 @@
   import type { DepartmentSummary } from "~/types/department";
   import type { ItemResponse } from "~/types/item";
 
+  definePageMeta({
+    middleware: "auth",
+  });
+  const { view } = useMain();
   const { setAlert } = useAlert();
   const { getDepartmentSummary } = useDepartment();
   const { items, getItemsExpired, getItemByCode } = useItem();
@@ -306,7 +311,8 @@
           height: 2rem;
         }
 
-        &-message {
+        &::after {
+          content: attr(data-message);
           z-index: 2;
           position: absolute;
           top: 0;
@@ -319,6 +325,16 @@
           justify-content: center;
           align-items: center;
         }
+      }
+    }
+    &[data-view="small"] {
+      padding: 0.5rem;
+      gap: 0.5rem;
+      .gd-page-insight {
+        width: calc((100% - 0.5rem) / 2);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
       }
     }
   }

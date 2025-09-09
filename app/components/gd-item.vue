@@ -44,6 +44,17 @@
           @click="formOpened = true"
         />
         <gd-button-icon
+          v-if="status !== 'decommissioned'"
+          icon="printer"
+          type="secondary"
+          :borderless="true"
+          :tooltip="{
+            text: 'Cetak QR',
+            position: 'left',
+          }"
+          @click="printerOpened = true"
+        />
+        <gd-button-icon
           icon="ellipsis"
           type="secondary"
           :borderless="true"
@@ -191,6 +202,113 @@
         </div>
       </form>
     </gd-modal>
+    <gd-modal
+      :name="printer ? 'Cetak Kode QR' : 'Pengaturan Printer'"
+      :visible="printerOpened"
+      @close="printerOpened = false"
+    >
+      <form v-if="!printer" class="gd-row-form">
+        <div class="gd-row-form-input">
+          <gd-input-text
+            v-model="printerHost[0]"
+            type="number"
+            placeholder="127"
+            label="Host"
+            :min="0"
+            :max="255"
+            :step="1"
+          />
+          <gd-input-text
+            v-model="printerHost[1]"
+            type="number"
+            placeholder="0"
+            :min="0"
+            :max="255"
+            :step="1"
+          />
+          <gd-input-text
+            v-model="printerHost[2]"
+            type="number"
+            placeholder="0"
+            :min="0"
+            :max="255"
+            :step="1"
+          />
+          <gd-input-text
+            v-model="printerHost[3]"
+            type="number"
+            placeholder="1"
+            :min="0"
+            :max="255"
+            :step="1"
+          />
+          <gd-input-text
+            v-model="printerPort"
+            type="number"
+            label="Port"
+            placeholder="8000"
+            :min="0"
+            :max="65535"
+            :step="1"
+          />
+        </div>
+        <div class="gd-row-form-button">
+          <gd-button
+            text="Simpan Pengaturan"
+            type="primary"
+            style="width: 100%"
+            @click="printerSet"
+          />
+        </div>
+      </form>
+      <div v-if="printer" class="gd-row-printer">
+        <div class="gd-row-printer-header">
+          <div class="gd-row-printer-header-icon">
+            <gd-svg name="printer" color="secondary" />
+          </div>
+          <div class="gd-row-printer-header-info">
+            <span class="gd-row-printer-header-info-name gd-headline-5">
+              {{ printer.host }}:{{ printer.port }}
+            </span>
+            <span class="gd-row-printer-header-info-status gd-body-5">
+              {{ online ? "Online" : "Offline" }}
+            </span>
+          </div>
+          <div class="gd-row-printer-header-action">
+            <gd-button-icon
+              icon="replay"
+              type="secondary"
+              @click="checkPrinterConfig"
+            />
+            <gd-button-icon
+              icon="close"
+              type="error"
+              @click="removePrinterConfig"
+            />
+          </div>
+        </div>
+        <div class="gd-row-printer-body">
+          <div class="gd-row-printer-body-action">
+            <gd-button
+              :disabled="!online"
+              style="width: 100%"
+              text="Uji Cetak"
+              type="secondary"
+              @click="printTest"
+            />
+          </div>
+          <div class="gd-row-printer-body-action">
+            <gd-button
+              :disabled="!online"
+              style="width: 100%"
+              text="Cetak QR"
+              type="primary"
+              @click="printerPrint"
+            />
+          </div>
+        </div>
+      </div>
+    </gd-modal>
   </tr>
 </template>
 
@@ -203,6 +321,15 @@
     full?: boolean;
   }>();
   const { getVerificationsByItem, createVerification } = useVerification();
+  const {
+    printer,
+    online,
+    checkPrinterConfig,
+    setPrinterConfig,
+    removePrinterConfig,
+    printTest,
+    print,
+  } = usePrinter();
   const { view } = useMain();
 
   const verifications = ref<VerificationResponse[]>([]);
@@ -219,6 +346,10 @@
   });
   const formNote = ref("");
   const formDecisionExpiration = ref("90");
+
+  const printerOpened = ref(false);
+  const printerHost = ref<[string, string, string, string]>(["", "", "", ""]);
+  const printerPort = ref("");
 
   const status = computed<"non_compliant" | "operational" | "decommissioned">(
     () => {
@@ -280,6 +411,33 @@
       verifications.value.unshift(verification);
       formOpened.value = false;
     }
+  };
+  const printerSet = () => {
+    if (
+      printerHost.value.some((x) => x === "") ||
+      printerPort.value === "" ||
+      parseInt(printerPort.value) <= 0 ||
+      parseInt(printerPort.value) > 65535
+    )
+      return;
+
+    setPrinterConfig({
+      host: printerHost.value.join("."),
+      port: parseInt(printerPort.value),
+    });
+  };
+  const printerPrint = async () => {
+    console.log(props.item);
+    const payload = {
+      id: props.item.id,
+      commodity_id: props.item.commodity_id,
+      commodity_name: props.item.commodity_name,
+      vendor_id: props.item.vendor_id,
+      vendor_name: props.item.vendor_name,
+      code: props.item.code,
+    };
+
+    await print(payload);
   };
 
   onMounted(async () => {
@@ -494,17 +652,80 @@
     }
     &-form {
       position: relative;
-      width: 15rem;
+      width: 20rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       &-input {
         position: relative;
         width: 100%;
+        display: flex;
+        align-items: flex-end;
+        gap: 0.5rem;
       }
       &-button {
         position: relative;
         margin-top: 0.5rem;
+      }
+    }
+    &-printer {
+      position: relative;
+      width: 20rem;
+      background-color: var(--background-depth-one-color);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: var(--border);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      &-header {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        &-icon {
+          position: relative;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 0.5rem;
+          padding: 0 0.5rem;
+          box-sizing: border-box;
+          background-color: var(--background-depth-three-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &-info {
+          position: relative;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          &-name {
+            color: var(--font-primary-color);
+          }
+          &-status {
+            color: var(--font-secondary-color);
+          }
+        }
+        &-action {
+          position: absolute;
+          right: 0;
+          top: 0;
+          display: flex;
+          gap: 0.5rem;
+        }
+      }
+      &-body {
+        position: relative;
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+        &-action {
+          position: relative;
+          width: 100%;
+        }
       }
     }
   }

@@ -41,7 +41,6 @@
 
 <script lang="ts" setup>
   import { gsap } from "gsap";
-  import type { Intake } from "~/types/intake";
 
   const { view } = useMain();
   const { setAlert } = useAlert();
@@ -89,11 +88,9 @@
 
   const exit = (path: string = "/workspaces") => {
     timeline.value.vars.onReverseComplete = () => {
-      console.log("Exiting animation completed");
       router.push(path);
     };
     timeline.value.reverse();
-    console.log("Exiting to", path);
   };
 
   onMounted(async () => {

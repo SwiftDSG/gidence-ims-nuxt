@@ -7,7 +7,6 @@
           commodity.name
         }}</span>
       </div>
-      <gd-button-icon icon="ellipsis" type="secondary" />
     </div>
     <div class="gd-commodity-body">
       <div class="gd-commodity-body-specifications">

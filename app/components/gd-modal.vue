@@ -17,6 +17,7 @@
             props.name
           }}</span>
           <gd-button-icon
+            v-if="view !== 'small'"
             type="secondary"
             icon="close"
             @click="emits('close')"
@@ -553,7 +554,8 @@
         &-header {
           height: 2rem;
           margin-top: 1rem;
-          justify-content: space-between;
+          padding: 0;
+          justify-content: center;
         }
         &-content {
           width: 100% !important;
