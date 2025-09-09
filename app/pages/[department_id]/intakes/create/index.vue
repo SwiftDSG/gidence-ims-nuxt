@@ -63,7 +63,7 @@
             <div class="gd-panel-form-body-group-input">
               <gd-input-text-select
                 :options="vendorOptions"
-                :model="vendorModel"
+                v-model="vendorModel"
                 :strict="true"
                 placeholder="Pilih Vendor"
                 type="primary"
@@ -93,7 +93,7 @@
             <div class="gd-panel-form-body-group-input">
               <gd-input-text-select
                 :options="commodityCategoryOptions"
-                :model="commodityCategoryModel"
+                v-model="commodityCategoryModel"
                 label="Kategori barang"
                 placeholder="Contoh: Digital Multimeter"
                 type="primary"
@@ -149,7 +149,7 @@
             <div class="gd-panel-form-body-group-input">
               <gd-input-text-select
                 :options="commodityOptions"
-                :model="commodityModel"
+                v-model="commodityModel"
                 :strict="true"
                 placeholder="Pilih Barang"
                 type="primary"
